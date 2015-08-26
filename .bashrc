@@ -1,30 +1,56 @@
-# Basic Sys Config
-export PATH=/usr/local/sbin:$PATH
-EDITOR=/usr/bin/vim
-
-# Bash history settings
-HISTSIZE=5000 # History in memory
-HISTFILESIZE=10000 # History on disk
-
-# Configuration options for SUDO
-export VISUAL="$EDITOR"
-
-# Setting defaults
-export SHELL=/usr/bin/bash
-export EDITOR=/usr/bin/vim
-set -o vi # Use vi-like command line interaction
-
+#*******************
 # Aliases
+#*******************
 alias cd='cd '
 alias lss="ls -1 | sed -e 's/\.[a-zA-Z]*$//'"
 alias ls='ls -G'
 
-# Prompt Variables
-PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[0;31m\]\h'; else echo '\[\033[0;33m\]\u\[\033[0;37m\]@\[\033[0;96m\]\h'; fi)\[\033[0;37m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;37m\]]\n\[\033[0;37m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]"
-PS2='\v>'
 
-# Configuration options for GIT
-export PATH="$PATH:/usr/local/git/bin"
+
+#*******************
+# Git Config
+#*******************
+# Enable bash completion for git commands
 if [ -f ~/.bash_files/ext/.git-completion.bash ]; then
     . ~/.bash_files/ext/.git-completion.bash
 fi
+
+# Define functions and values for git prompt
+YELLOW="\033[0;33m"
+GREEN="\033[0;032m"
+BLUE="\033[0;034m"
+STANDARD="\033[0;50m"
+RED="\033[0;031m"
+
+function parse_git_branch (){
+    echo "$(git symbolic-ref HEAD 2>/dev/null | sed 's#refs/heads/\(.*\)# (\1)#')"
+}
+
+function git_color_status {
+    local local_git_status="$(git status 2>/dev/null)"
+    local modified_files="$(git diff --numstat 2>/dev/null | wc -l)"
+    local newly_indexed_files="$(git diff --cached --numstat 2>/dev/null | wc -l)"
+    local commits_ahead="$(git rev-list @{u}.. 2>/dev/null | wc -l) "
+    local commits_behind="$(git rev-list ..@{u} 2>/dev/null | wc -l)" 
+
+    if [ "$modified_files" -ne 0 ] 
+    then
+        local color="$RED"
+    elif [ "$newly_indexed_files" -ne 0 ] 
+    then
+        local color="$GREEN"
+    elif [ "$commits_behind" -ne 0 ] 
+    then
+        local color="$YELLOW"
+    elif [ "$commits_ahead" -ne 0 ] 
+    then
+        local color="$BLUE"
+    else
+        local color="$STANDARD"
+    fi
+    echo -e "$color"
+}
+
+# Prompt Variables
+PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[0;31m\]\h'; else echo '\[\033[0;33m\]\u\[\033[0;37m\]@\[\033[0;96m\]\h'; fi)\[\033[0;37m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;37m\]]\[\$(git_color_status)\]\$(parse_git_branch)\n\[\033[0;37m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]"
+PS2='\v>'
