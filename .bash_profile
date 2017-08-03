@@ -1,3 +1,39 @@
+# $1 the path to be added as an absolute path
+# $2 a boolean for whether the path should be prepended. default: false
+# $3 the path variable to add to
+function addToPath {
+    # ${!3} dereferences $3 to use the value the variable refers to. For example $3=PATH would give $PATH
+    if [ -z ${3+x} ]; then TMP_PATH="$PATH"; TMP_NAME="PATH"; else TMP_PATH="${!3}"; TMP_NAME="$3"; fi
+    if [ ! -d $1 ]; then echo "WARNING: Added $1 to $TMP_NAME but $1 doens't seem to exist"; fi
+
+    case ":$TMP_PATH:" in # Add trailing :'s to cover first and last entries
+        *":$1:"*)
+            ;; # Exists Already
+        *)
+            case true in
+                $2)
+                    TMP_PATH="$1:$TMP_PATH"
+                    ;;
+                *)
+                    TMP_PATH="$TMP_PATH:$1"
+                    ;;
+            esac
+            ;;
+    esac
+
+    # Remove potential wrapping ":" chars
+    TMP_PATH=${TMP_PATH#":"}
+    TMP_PATH=${TMP_PATH%":"}
+    if [ -z ${3+x} ]; then export PATH="$TMP_PATH"; else export $3="$TMP_PATH"; fi
+}
+
+# Set up basic PATH variable
+addToPath /usr/local/bin
+addToPath /usr/bin
+addToPath /usr/sbin
+addToPath /bin
+addToPath /sbin
+
 # Set the editor to vim if possible, ve otherwise.
 VIM_DIR="$(which vim 2> /dev/null)"
 VI_DIR="$(which vi 2> /dev/null)"
@@ -20,28 +56,6 @@ else
     echo '[ERROR] Unable to assign shell to bash: bash not found in path'
 fi
 
-function addToPath {
-# $1 the path to be added as an absolute path
-# $2 a boolean for whether the path should be added before or after the
-    case ":$PATH:" in # Add trailing :'s to cover first and last entries
-        *":$1:"*)
-            ;; # Exists Already
-        *)
-            case true in
-                $2)
-                    export PATH="$1:$PATH"
-                    ;;
-                *)
-                    export PATH="$PATH:$1"
-                    ;;
-            esac
-            ;;
-    esac
-}
-
-# Set up basic PATH variable
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-
 export HISTSIZE=5000 # History in memory
 export HISTFILESIZE=10000 # History on disk
 
@@ -58,3 +72,12 @@ fi
 if [ -f ~/.bashrc ]; then
     source ~/.bashrc
 fi
+
+# Remove duplicates from path
+NEW_PATH=""
+IFS=':' read -r -a path_array <<< "$PATH"
+for element in "${path_array[@]}"
+do
+    addToPath $element false NEW_PATH
+done
+export PATH=$NEW_PATH
