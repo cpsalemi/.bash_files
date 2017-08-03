@@ -33,7 +33,21 @@ STANDARD="\033[0;50m"
 RED="\033[0;031m"
 
 function parse_git_branch (){
-    echo "$(git symbolic-ref HEAD 2>/dev/null | sed 's#refs/heads/\(.*\)# (\1)#')"
+    if [ "$(is_rebase)" = "TRUE" ]
+    then
+        echo " REBASE "
+    else
+        echo "$(git symbolic-ref HEAD 2>/dev/null | sed 's#refs/heads/\(.*\)# (\1)#')"
+    fi
+}
+
+function is_rebase (){
+    local rebase_dir="$(git rev-parse --git-dir 2>/dev/null)/rebase-merge"
+    if [ -d "$rebase_dir" ]; then
+        echo "TRUE"
+    else
+        echo "FALSE"
+    fi
 }
 
 function git_color_status {
@@ -55,6 +69,9 @@ function git_color_status {
     elif [ "$commits_ahead" -ne 0 ] 
     then
         local color="$BLUE"
+    elif [ "$(is_rebase)" = "TRUE" ]
+    then
+        local color="$RED"
     else
         local color="$STANDARD"
     fi
@@ -63,4 +80,4 @@ function git_color_status {
 
 # Prompt Variables
 PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[0;31m\]\h'; else echo '\[\033[0;33m\]\u\[\033[0;37m\]@\[\033[0;96m\]\h'; fi)\[\033[0;37m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;37m\]]\[\$(git_color_status)\]\$(parse_git_branch)\n\[\033[0;37m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]"
-PS2='\v>'
+nPS2='\v>'
