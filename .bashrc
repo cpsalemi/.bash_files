@@ -4,6 +4,8 @@
 alias cd='cd '
 alias lss="ls -1 | sed -e 's/\.[a-zA-Z]*$//'"
 alias ls='ls -G'
+alias gol='git log --oneline'
+alias gdno="git diff HEAD^ HEAD --name-only"
 
 
 
