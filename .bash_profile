@@ -12,6 +12,14 @@ else
     echo '[ERROR] Unable to assign editor to vim: vim not found in path'
 fi
 
+# Set the shell to bash
+BASH_DIR="$(which bash 2> /dev/null)"
+if [ ! -z $BASH_DIR ]; then
+    export SHELL=$BASH_DIR
+else
+    echo '[ERROR] Unable to assign shell to bash: bash not found in path'
+fi
+
 function addToPath {
 # $1 the path to be added as an absolute path
 # $2 a boolean for whether the path should be added before or after the
@@ -31,13 +39,8 @@ function addToPath {
     esac
 }
 
-# Set the shell to bash
-BASH_DIR="$(which bash 2> /dev/null)"
-if [ ! -z $BASH_DIR ]; then
-    export SHELL=$BASH_DIR
-else
-    echo '[ERROR] Unable to assign shell to bash: bash not found in path'
-fi
+# Set up basic PATH variable
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 export HISTSIZE=5000 # History in memory
 export HISTFILESIZE=10000 # History on disk
