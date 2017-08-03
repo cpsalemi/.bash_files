@@ -12,6 +12,25 @@ else
     echo '[ERROR] Unable to assign editor to vim: vim not found in path'
 fi
 
+function addToPath {
+# $1 the path to be added as an absolute path
+# $2 a boolean for whether the path should be added before or after the
+    case ":$PATH:" in # Add trailing :'s to cover first and last entries
+        *":$1:"*)
+            ;; # Exists Already
+        *)
+            case true in
+                $2)
+                    export PATH="$1:$PATH"
+                    ;;
+                *)
+                    export PATH="$PATH:$1"
+                    ;;
+            esac
+            ;;
+    esac
+}
+
 # Set the shell to bash
 BASH_DIR="$(which bash 2> /dev/null)"
 if [ ! -z $BASH_DIR ]; then
@@ -26,7 +45,7 @@ export HISTFILESIZE=10000 # History on disk
 set -o vi   # Use vi-like command line interaction
 
 # Configure the PATH for GIT
-export PATH=$PATH:/usr/local/git/bin
+addToPath /usr/local/git/bin
 
 # Source .profile and .bashrc; conflicting settings will take those from the files below
 if [ -f ~/.profile ]; then
