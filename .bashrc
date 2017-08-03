@@ -7,6 +7,14 @@ alias ls='ls -G'
 alias gol='git log --oneline'
 alias gdno="git diff HEAD^ HEAD --name-only"
 
+#*******************
+# Load Local rc Files
+#*******************
+local_rc_files=($(ls -a ~/.bash_files/local/.*rc))
+for local_rc in "${local_rc_files[@]}"
+do
+    source $local_rc
+done
 
 
 #*******************
