@@ -91,10 +91,11 @@ nPS2='\v>'
 #*******************
 # Load Local rc Files: Keep this at the end so that local settings override package settings
 #*******************
-local_rc_files=($(ls -a ~/.bash_files/local/.*rc 2>/dev/null))
+local_rc_files=($(ls -a ~/.bash_files/local/*rc 2>/dev/null))
 if [ ! -z "$local_rc_files" ]; then
     for local_rc in "${local_rc_files[@]}"
     do
+        echo Loading $local_rc
         source $local_rc
     done
 fi
