@@ -16,6 +16,21 @@ if [ -f ~/.bash_files/ext/.git-completion.bash ]; then
     . ~/.bash_files/ext/.git-completion.bash
 fi
 
+#******************
+# virtualenvwrapper
+#******************
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+    # Some newer brew installations of python2 only link python and pip as
+    # python2 and pip2 in /usr/local/bin. These installations require
+    # a modification to PATH in order to have the standard python and pip
+    # commands work. virtualenvwrapper requies knowing where python is
+    # installed, it typically looks in /usr/local/bin but will miss for the
+    # above cases. For this reason, we explicetely tell virtualevnwrapper to
+    # use the installed version
+    export VIRTUALENVWRAPPER_PYTHON="$(which python)"
+    source /usr/local/bin/virtualenvwrapper.sh
+fi
+
 # Define functions and values for git prompt
 YELLOW="\033[0;33m"
 GREEN="\033[0;032m"
