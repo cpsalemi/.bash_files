@@ -7,17 +7,6 @@ alias ls='ls -G'
 alias gol='git log --oneline'
 alias gdno="git diff HEAD^ HEAD --name-only"
 
-#*******************
-# Load Local rc Files
-#*******************
-local_rc_files=($(ls -a ~/.bash_files/local/.*rc 2>/dev/null))
-if [ ! -z "$local_rc_files" ]; then
-    for local_rc in "${local_rc_files[@]}"
-    do
-        source $local_rc
-    done
-fi
-
 
 #*******************
 # Git Config
@@ -83,3 +72,14 @@ function git_color_status {
 # Prompt Variables
 PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[0;31m\]\h'; else echo '\[\033[0;33m\]\u\[\033[0;37m\]@\[\033[0;96m\]\h'; fi)\[\033[0;37m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;37m\]]\[\$(git_color_status)\]\$(parse_git_branch)\n\[\033[0;37m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]"
 nPS2='\v>'
+
+#*******************
+# Load Local rc Files: Keep this at the end so that local settings override package settings
+#*******************
+local_rc_files=($(ls -a ~/.bash_files/local/.*rc 2>/dev/null))
+if [ ! -z "$local_rc_files" ]; then
+    for local_rc in "${local_rc_files[@]}"
+    do
+        source $local_rc
+    done
+fi
