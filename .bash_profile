@@ -1,12 +1,3 @@
-# Source .profile and .bashrc
-if [ -f ~/.profile ]; then
-    source ~/.profile
-fi
-
-if [ -f ~/.bashrc ]; then
-    source ~/.bashrc
-fi
-
 # Set the editor to vim if possible, ve otherwise.
 VIM_DIR="$(which vim 2> /dev/null)"
 VI_DIR="$(which vi 2> /dev/null)"
@@ -36,3 +27,12 @@ set -o vi   # Use vi-like command line interaction
 
 # Configure the PATH for GIT
 export PATH=$PATH:/usr/local/git/bin
+
+# Source .profile and .bashrc; conflicting settings will take those from the files below
+if [ -f ~/.profile ]; then
+    source ~/.profile
+fi
+
+if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+fi
