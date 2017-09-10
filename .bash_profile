@@ -8,8 +8,8 @@ if [ -f ~/.bashrc ]; then
 fi
 
 # Some system settings
-export EDITOR=/usr/bin/vim
-export SHELL=/usr/bin/bash
+export EDITOR="$(which vim)"
+export SHELL="$(which bash)"
 export HISTSIZE=5000 # History in memory
 export HISTFILESIZE=10000 # History on disk
 export VISUAL=$EDITOR
