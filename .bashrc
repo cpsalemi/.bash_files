@@ -28,6 +28,7 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     # above cases. For this reason, we explicetely tell virtualevnwrapper to
     # use the installed version
     export VIRTUALENVWRAPPER_PYTHON="$(which python)"
+    export VIRTUAL_ENV_DISABLE_PROMPT=1
     source /usr/local/bin/virtualenvwrapper.sh
 fi
 
