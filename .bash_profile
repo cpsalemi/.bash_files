@@ -61,9 +61,6 @@ export HISTFILESIZE=10000 # History on disk
 
 set -o vi   # Use vi-like command line interaction
 
-# Configure the PATH for GIT
-addToPath /usr/local/git/bin
-
 # Source .profile and .bashrc; conflicting settings will take those from the files below
 if [ -f ~/.profile ]; then
     source ~/.profile
