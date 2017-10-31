@@ -1,3 +1,10 @@
+# TMUX will load /etc/profile which will then load path_helper which can trash
+# your path. Turn this off with the following.
+if [ -n "$TMUX" ]; then
+    PATH=""
+    source /etc/profile
+fi
+
 # $1 the path to be added as an absolute path
 # $2 a boolean for whether the path should be prepended. default: false
 # $3 the path variable to add to
