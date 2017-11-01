@@ -8,6 +8,7 @@ fi
 # $1 the path to be added as an absolute path
 # $2 a boolean for whether the path should be prepended. default: false
 # $3 the path variable to add to
+# Example: addToPath /some/path [true|false] [PATH_VAR]
 function addToPath {
     # ${!3} dereferences $3 to use the value the variable refers to. For example $3=PATH would give $PATH
     if [ -z ${3+x} ]; then TMP_PATH="$PATH"; TMP_NAME="PATH"; else TMP_PATH="${!3}"; TMP_NAME="$3"; fi
