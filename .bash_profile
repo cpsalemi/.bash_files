@@ -8,6 +8,7 @@ fi
 ################################################################################
 # General Settings
 ################################################################################
+export VIRTUAL_ENV_DISABLE_PROMPT=1 # Prevent VirtualEnv from touching prompt
 export HISTSIZE=5000 # History in memory
 export HISTFILESIZE=10000 # History on disk
 set -o vi   # Use vi-like command line interaction
