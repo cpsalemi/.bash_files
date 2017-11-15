@@ -6,6 +6,17 @@ if [ -n "$TMUX" ]; then
 fi
 
 ################################################################################
+# PATH
+################################################################################
+
+PATH=/usr/local/bin:$PATH
+PATH=$PATH:/usr/bin
+PATH=$PATH:/usr/sbin
+PATH=$PATH:/bin
+PATH=$PATH:/sbin
+export PATH
+
+################################################################################
 # General Settings
 ################################################################################
 export VIRTUAL_ENV_DISABLE_PROMPT=1 # Prevent VirtualEnv from touching prompt
