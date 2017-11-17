@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # addToPath allows you to modify a path like variable with allowing duplicate entries
 # $1 the path to be added as an absolute path
 # $2 a boolean for whether the path should be prepended. default: false

@@ -5,9 +5,9 @@ if [ -n "$TMUX" ]; then
     source /etc/profile
 fi
 
-################################################################################
+###############################################################################
 # PATH
-################################################################################
+###############################################################################
 
 PATH=/usr/local/bin:$PATH
 PATH=$PATH:/usr/bin
@@ -16,9 +16,9 @@ PATH=$PATH:/bin
 PATH=$PATH:/sbin
 export PATH
 
-################################################################################
+###############################################################################
 # General Settings
-################################################################################
+###############################################################################
 export VIRTUAL_ENV_DISABLE_PROMPT=1 # Prevent VirtualEnv from touching prompt
 export HISTSIZE=5000 # History in memory
 export HISTFILESIZE=10000 # History on disk
@@ -46,7 +46,11 @@ else
     echo '[ERROR] Unable to assign shell to bash: bash not found in path'
 fi
 
-# Source .profile and .bashrc; conflicting settings will take those from the files below
+###############################################################################
+# Override Setting Files
+###############################################################################
+# Source .profile and .bashrc; conflicting settings will take those from the
+# files below
 if [ -f ~/.profile ]; then
     source ~/.profile
 fi
@@ -55,7 +59,11 @@ if [ -f ~/.bashrc ]; then
     source ~/.bashrc
 fi
 
-# If possible, clean the path
-if [ -f ~/.bash_files/.bash_path.bash ]; then
-    source ~/.bash_files/.bash_path.bash
+
+###############################################################################
+# Clean Path
+###############################################################################
+# Remove duplicates in PATH
+if [ -f ~/.bash_files/.bash_path ]; then
+    source ~/.bash_files/.bash_path
 fi

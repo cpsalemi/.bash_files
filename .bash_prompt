@@ -1,7 +1,7 @@
-if [ -f ~/.bash_files/ext/.git-completion.bash ]; then
-    . ~/.bash_files/ext/.git-completion.bash
-fi
-
+#!/bin/bash
+###############################################################################
+# Git Prompt Functions
+###############################################################################
 # Define functions and values for git prompt
 YELLOW="\033[0;33m"
 GREEN="\033[0;032m"
@@ -55,6 +55,10 @@ function git_color_status {
     echo -e "$color"
 }
 
+
+###############################################################################
+# virtualenv prompt
+###############################################################################
 function get_virtualenvwrapper_env {
     if [ ! -z $VIRTUAL_ENV ]; then
         echo "[$(basename $VIRTUAL_ENV)]"
@@ -63,6 +67,9 @@ function get_virtualenvwrapper_env {
     fi
 }
 
-# Prompt Variables
+
+###############################################################################
+# Prompts 
+###############################################################################
 PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[0;31m\]\h'; else echo '\[\033[0;33m\]\u\[\033[0;37m\]@\[\033[0;96m\]\h'; fi)\[\033[0;37m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;37m\]]\[${STANDARD}\]\$(get_virtualenvwrapper_env)\[\$(git_color_status)\]\$(parse_git_branch)\n\[\033[0;37m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]"
 nPS2='\v>'
