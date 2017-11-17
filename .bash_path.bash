@@ -36,6 +36,6 @@ NEW_PATH=""
 IFS=':' read -r -a path_array <<< "$PATH"
 for element in "${path_array[@]}"
 do
-    addToPath $element false NEW_PATH
+    addToPath "$element" false NEW_PATH
 done
 export PATH=$NEW_PATH
