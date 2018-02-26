@@ -5,6 +5,7 @@ alias lss="ls -1 | sed -e 's/\.[a-zA-Z]*$//'"
 alias ls='ls -G'
 alias glog='git log --oneline'
 alias gdno="git diff --name-only"
+alias girebase="git rebase -i"
 alias cgo="cd $GOPATH"
 
 
