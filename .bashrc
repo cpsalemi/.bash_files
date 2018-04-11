@@ -17,6 +17,7 @@ function glogrn() {
     git log --oneline origin/${b}..HEAD
     
 }
+
 # Show both HEAD^ @{u} and ^@{u} HEAD logs
 alias gloguh="echo @{u};git log --oneline HEAD..@{u}; echo HEAD; git log --oneline @{u}..HEAD"
 # Show both HEAD^ origin/<HEAD> and ^@{u} origin<HEAD> logs
@@ -43,6 +44,12 @@ function grebaseirn() {
     local b=$(git branch | grep '\*' | awk '{print $2}')
     git rebase -i HEAD~$(git log --oneline origin/${b}..HEAD | wc -l)
 }
+
+########################################
+# Git Amend Aliases
+########################################
+# This is similar to a rebase's `fixup`
+alias gfu='git commit --amend --no-edit'
 
 ########################################
 # Git Commit Count Aliases
