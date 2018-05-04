@@ -4,6 +4,14 @@ if [ -n "$TMUX" ]; then
     PATH=""
     source /etc/profile
 fi
+###############################################################################
+# Path Functions
+###############################################################################
+canDedupePath=false
+if [ -f ~/.bash_files/.bash_path ]; then
+    source ~/.bash_files/.bash_path
+    canDedupePath=true
+fi
 
 ###############################################################################
 # PATH
@@ -61,9 +69,8 @@ fi
 
 
 ###############################################################################
-# Clean Path
+# Dedupe Path
 ###############################################################################
-# Remove duplicates in PATH
-if [ -f ~/.bash_files/.bash_path ]; then
-    source ~/.bash_files/.bash_path
+if [ "$canDedupePath" = true ] ; then
+    dedupePath
 fi
