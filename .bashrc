@@ -31,6 +31,8 @@ function glogrnh() {
 # Show a name-only diff
 alias gdiffno="git diff --name-only"
 
+alias gamendne="git commit --amend --no-edit"
+
 ########################################
 # Git Rebase Aliases
 ########################################
