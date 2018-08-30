@@ -3,6 +3,11 @@
 ################################################################################
 alias lss="ls -1 | sed -e 's/\.[a-zA-Z]*$//'"
 alias ls='ls -G'
+alias l='ls'
+alias la='ls -a'
+alias ll='ls -l'
+
+alias p='pwd'
 
 ########################################
 # Git Log Aliases and Commands
