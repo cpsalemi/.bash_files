@@ -76,7 +76,7 @@ if [ "$HOSTNAME" = "Chiaras-MacBook-Pro.local" ]; then
     NAME="local"
 else
     #IP=$(ifconfig en0 | grep inet | grep -v inet6 | awk '{print $2}')
-    NAME="\h"
+    NAME=$HOSTNAME
 fi
 PS1="\[\033[0;37m\]\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[0;31m\]\h'; else echo '\[\033[0;33m\]\u\[\033[0;37m\]@\[\033[0;96m\]$NAME'; fi)\[\033[0;37m\]]\342\224\200[\[\033[0;32m\]\w\[\033[0;37m\]]\[${STANDARD}\]\$(get_virtualenvwrapper_env)\[\$(git_color_status)\]\$(parse_git_branch)\]\[\033[0;37m\]$(echo -e ' \xE2\x96\xB6 ')"
 nPS2='\v>'
