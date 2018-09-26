@@ -78,5 +78,5 @@ fi
 ################################################################################
 ## Turn off stupid plug in power chime
 ################################################################################
-#defaults write com.apple.PowerChime ChimeOnNoHardware -bool true
-#killall PowerChime
+defaults write com.apple.PowerChime ChimeOnNoHardware -bool true
+killall PowerChime

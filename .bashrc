@@ -1,5 +1,5 @@
 ################################################################################
-# Aliases and Commands
+# Basic Aliases and Commands
 ################################################################################
 alias lss="ls -1 | sed -e 's/\.[a-zA-Z]*$//'"
 alias ls='ls -G'
@@ -8,6 +8,11 @@ alias la='ls -a'
 alias ll='ls -l'
 
 alias p='pwd'
+
+########################################
+# NAS Aliases
+########################################
+alias mountnas="sudo sshfs -o IdentityFile=~/.ssh/id_ed25519_nas chiara@192.168.1.20:/vault/chiara ~/nasvault -o idmap=user -o allow_other,defer_permissions -o volname=nasvault"
 
 ########################################
 # Git Log Aliases and Commands
